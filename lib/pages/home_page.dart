@@ -5,8 +5,16 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text("Hi"),
+    return Scaffold(
+      body: Stack(
+        children: [
+          Image.asset(
+            "assets/bg.jpg",
+            height: MediaQuery.of(context).size.height,
+            fit: BoxFit.cover,
+          ),
+        ],
+      ),
     );
   }
 }

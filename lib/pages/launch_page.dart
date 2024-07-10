@@ -20,49 +20,65 @@ class LaunchPage extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             fit: BoxFit.cover,
           ),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Wifi Auto Connect",
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: whiteColor,
-                        ),
-                  ),
-                  Image.asset("assets/logo.png"),
-                  const SlideButton(),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      style: DefaultTextStyle.of(context).style,
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, ),
+              // padding: const EdgeInsets.symmetric(horizontal: 0, ),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width/10),
+                  border: Border.all(color: whiteColor.withOpacity(0.2)),
+                  color: whiteColor.withOpacity(0.2),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width/10),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        TextSpan(
-                            style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      color: whiteColor,
-                                    ),
-                            text:
-                                "By Clicking on Let's Start You Agree To Our "),
-                        TextSpan(
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(color: Colors.purple),
-                          text: "Privacy Policy.",
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              // Handle the privacy policy tap here
-                            },
+                        const SizedBox(height: 50),
+                        Text(
+                          "Wifi Auto Connect",
+                          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: whiteColor,
+                              ),
                         ),
+                        Image.asset("assets/logo.png"),
+                        const SlideButton(),
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            style: DefaultTextStyle.of(context).style,
+                            children: [
+                              TextSpan(
+                                  style:
+                                      Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                            color: whiteColor,
+                                          ),
+                                  text:
+                                      "By Clicking on Let's Start You Agree To Our "),
+                              TextSpan(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(color: primaryColor),
+                                text: "Privacy Policy.",
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    // Handle the privacy policy tap here
+                                  },
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 50),
                       ],
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ),
@@ -85,7 +101,11 @@ class _SlideButtonState extends State<SlideButton> {
   double val = -10;
 
   void _playSound() async {
-    await AudioPlayer().play(AssetSource("click.mp3"));
+    await AudioPlayer().play(AssetSource("click.wav"));
+  }
+
+  void _playCancelSound() async{
+    await AudioPlayer().play(AssetSource("tap.wav"));
   }
 
   @override
@@ -96,8 +116,8 @@ class _SlideButtonState extends State<SlideButton> {
         clipBehavior: Clip.none,
         children: [
           Shimmer.fromColors(
-            baseColor: primaryColor,
-            highlightColor: primaryColor.withAlpha(20),
+            baseColor: primaryColor.withOpacity(0.8),
+            highlightColor: primaryColor.withOpacity(0.2),
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(width: 3),
@@ -127,15 +147,15 @@ class _SlideButtonState extends State<SlideButton> {
               },
               onPanEnd: (details) {
                 setState(() {
-                  _playSound();
                   if (val < 120) {
+                    _playCancelSound();
                     val = -10;
                   } else {
                     _playSound();
                     Get.to(
                       () => const HomePage(),
                       transition: Transition.fadeIn,
-                      duration: const Duration(milliseconds: 500),
+                      duration: const Duration(milliseconds: 300),
                     );
                     val = -10;
                   }
@@ -143,14 +163,14 @@ class _SlideButtonState extends State<SlideButton> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(width: 3, color: primaryColor),
+                  border: Border.all(width: 3, color: primaryColor.withOpacity(0.8)),
                   borderRadius: const BorderRadius.all(Radius.circular(900)),
-                  color: Colors.black,
+                  color: Colors.black.withOpacity(0.8),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.power_settings_new_rounded,
                   size: 50,
-                  color: primaryColor,
+                  color: primaryColor.withOpacity(0.8),
                 ),
               ),
             ),
