@@ -19,7 +19,6 @@ class LaunchPage extends StatelessWidget {
             "assets/bg.jpg",
             height: MediaQuery.of(context).size.height,
             fit: BoxFit.cover,
-            filterQuality: FilterQuality.high,
           ),
           Padding(
             padding: const EdgeInsets.all(5.0),
@@ -85,7 +84,7 @@ class SlideButton extends StatefulWidget {
 class _SlideButtonState extends State<SlideButton> {
   double val = -10;
 
-  void _playSound() async{
+  void _playSound() async {
     await AudioPlayer().play(AssetSource("click.mp3"));
   }
 
@@ -119,21 +118,25 @@ class _SlideButtonState extends State<SlideButton> {
             left: val,
             top: -5,
             child: GestureDetector(
-              onPanUpdate: (details){
+              onPanUpdate: (details) {
                 setState(() {
-                  if(val < 120) {
-                    val+=details.delta.dx;
+                  if (val < 120) {
+                    val += details.delta.dx;
                   }
                 });
               },
-              onPanEnd: (details){
+              onPanEnd: (details) {
                 setState(() {
                   _playSound();
-                  if(val < 120) {
+                  if (val < 120) {
                     val = -10;
-                  }else{
+                  } else {
                     _playSound();
-                    Get.to(()=>const HomePage());
+                    Get.to(
+                      () => const HomePage(),
+                      transition: Transition.fadeIn,
+                      duration: const Duration(milliseconds: 500),
+                    );
                     val = -10;
                   }
                 });
