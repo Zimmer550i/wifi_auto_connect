@@ -1,6 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wifi_auto_connect/controller/wifi_controller.dart';
+import 'package:wifi_auto_connect/pages/wifi_list_page.dart';
 import 'package:wifi_auto_connect/utilities/password_generator.dart';
 import 'package:wifi_auto_connect/widgets/glassmorphism.dart';
 import '../utilities/constants.dart';
@@ -8,11 +10,11 @@ import '../utilities/constants.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  void _playClickSound() async{
+  void _playClickSound() async {
     await AudioPlayer().play(AssetSource("click.wav"));
   }
 
-  void _playTapSound() async{
+  void _playTapSound() async {
     await AudioPlayer().play(AssetSource("tap.wav"));
   }
 
@@ -73,7 +75,7 @@ class HomePage extends StatelessWidget {
                     title: "Who's on my WIFI?",
                     body:
                         "Let you know about the devices connected to your wifi network",
-                    onClick: (){
+                    onClick: () {
                       _playClickSound();
                     },
                   ),
@@ -86,8 +88,16 @@ class HomePage extends StatelessWidget {
                           iconLocation: "assets/buy.png",
                           title: "Buy Internet",
                           body: "Buy more internet",
-                          onClick: (){
+                          onClick: () {
                             _playClickSound();
+                            var temp = Get.put(WifiController());
+                            temp.isScanning = true;
+                            temp.getWifiNetworks();
+                            Get.to(
+                              () => WifiListPage(),
+                              transition: Transition.fadeIn,
+                              duration: const Duration(milliseconds: 300),
+                            );
                           },
                         ),
                       ),
@@ -99,7 +109,7 @@ class HomePage extends StatelessWidget {
                           iconLocation: "assets/sell.png",
                           title: "Sell Internet",
                           body: "Sell your available internet",
-                          onClick: (){
+                          onClick: () {
                             _playTapSound();
                           },
                         ),
@@ -116,7 +126,7 @@ class HomePage extends StatelessWidget {
                           iconLocation: "assets/user.png",
                           title: "My Account",
                           body: "Manage your account",
-                          onClick: (){
+                          onClick: () {
                             _playTapSound();
                           },
                         ),
@@ -129,7 +139,7 @@ class HomePage extends StatelessWidget {
                           iconLocation: "assets/settings.png",
                           title: "Settings",
                           body: "Manage your settings",
-                          onClick: (){
+                          onClick: () {
                             _playTapSound();
                           },
                         ),
@@ -143,7 +153,7 @@ class HomePage extends StatelessWidget {
                     title: "Password Generator",
                     body:
                         "Easily create and generate random password for high security",
-                    onClick: (){
+                    onClick: () {
                       _playClickSound();
                       generatePassword(context);
                     },
