@@ -1,9 +1,7 @@
-import 'dart:ui';
-
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wifi_auto_connect/utilities/password_generator.dart';
 import 'package:wifi_auto_connect/widgets/glassmorphism.dart';
 import '../utilities/constants.dart';
 
@@ -140,12 +138,15 @@ class HomePage extends StatelessWidget {
                   ),
                   Expanded(child: Container()),
                   //Bottom Bar
-                  const BarWidget(
+                  BarWidget(
                     iconLocation: "assets/padlock.png",
                     title: "Password Generator",
                     body:
                         "Easily create and generate random password for high security",
-                    onClick: null,
+                    onClick: (){
+                      _playClickSound();
+                      generatePassword(context);
+                    },
                     iconRightSide: true,
                   ),
                 ],
@@ -291,7 +292,7 @@ class BoxWidget extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(),
+                    const Row(),
                     ImageIcon(
                       AssetImage(iconLocation),
                       size: 80,
