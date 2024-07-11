@@ -228,15 +228,15 @@ class WifiListPage extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: primaryColor,
+                    color: Colors.white60,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Shimmer.fromColors(
                     baseColor: primaryColor,
-                    highlightColor: whiteColor,
+                    highlightColor: Colors.white,
                     child: const Text(
                       "Connect",
-                      style: TextStyle(color: whiteColor),
+                      style: TextStyle(color: whiteColor, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
