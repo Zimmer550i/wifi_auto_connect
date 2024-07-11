@@ -21,64 +21,54 @@ class LaunchPage extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, ),
-              // padding: const EdgeInsets.symmetric(horizontal: 0, ),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width/10),
-                  border: Border.all(color: whiteColor.withOpacity(0.2)),
-                  color: whiteColor.withOpacity(0.2),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width/10),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const SizedBox(height: 50),
-                        Text(
-                          "Wifi Auto Connect",
-                          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: whiteColor,
-                              ),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 50),
+                  Text(
+                    "Wifi Auto Connect",
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: whiteColor,
                         ),
-                        Image.asset("assets/logo.png"),
-                        const SlideButton(),
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            style: DefaultTextStyle.of(context).style,
-                            children: [
-                              TextSpan(
-                                  style:
-                                      Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                            color: whiteColor,
-                                          ),
-                                  text:
-                                      "By Clicking on Let's Start You Agree To Our "),
-                              TextSpan(
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(color: primaryColor),
-                                text: "Privacy Policy.",
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    // Handle the privacy policy tap here
-                                  },
-                              ),
-                            ],
+                  ),
+                  Image.asset("assets/logo.png"),
+                  const SlideButton(),
+                  const SizedBox(height: 16,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        style: DefaultTextStyle.of(context).style,
+                        children: [
+                          TextSpan(
+                              style:
+                                  Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                        color: whiteColor,
+                                      ),
+                              text:
+                                  "By Clicking on Let's Start You Agree To Our "),
+                          TextSpan(
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(color: primaryColor),
+                            text: "Privacy Policy.",
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+
+                              },
                           ),
-                        ),
-                        const SizedBox(height: 50),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
+                  const SizedBox(height: 50),
+                ],
               ),
             ),
           ),
