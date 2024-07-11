@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wifi_auto_connect/widgets/glassmorphism.dart';
@@ -5,6 +9,14 @@ import '../utilities/constants.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  void _playClickSound() async{
+    await AudioPlayer().play(AssetSource("click.wav"));
+  }
+
+  void _playTapSound() async{
+    await AudioPlayer().play(AssetSource("tap.wav"));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,58 +70,70 @@ class HomePage extends StatelessWidget {
                   ),
                   Expanded(child: Container()),
                   //Top Bar
-                  const BarWidget(
-                    icon: Icons.wifi_rounded,
+                  BarWidget(
+                    iconLocation: "assets/wifi-router.png",
                     title: "Who's on my WIFI?",
                     body:
                         "Let you know about the devices connected to your wifi network",
-                    onClick: null,
+                    onClick: (){
+                      _playClickSound();
+                    },
                   ),
                   //Grid
                   Expanded(child: Container()),
                   Row(
                     children: [
                       Expanded(
-                        child: const BoxWidget(
-                          icon: Icons.wifi_rounded,
+                        child: BoxWidget(
+                          iconLocation: "assets/buy.png",
                           title: "Buy Internet",
-                          body:
-                              "Buy more internet",
-                          onClick: null,
+                          body: "Buy more internet",
+                          onClick: (){
+                            _playClickSound();
+                          },
                         ),
                       ),
-                      const SizedBox(width: 16,),
+                      const SizedBox(
+                        width: 16,
+                      ),
                       Expanded(
-                        child: const BoxWidget(
-                          icon: Icons.wifi_rounded,
+                        child: BoxWidget(
+                          iconLocation: "assets/sell.png",
                           title: "Sell Internet",
-                          body:
-                              "Sell your available internet",
-                          onClick: null,
+                          body: "Sell your available internet",
+                          onClick: (){
+                            _playTapSound();
+                          },
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16,),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   Row(
                     children: [
                       Expanded(
-                        child: const BoxWidget(
-                          icon: Icons.wifi_rounded,
+                        child: BoxWidget(
+                          iconLocation: "assets/user.png",
                           title: "My Account",
-                          body:
-                          "Manage your account",
-                          onClick: null,
+                          body: "Manage your account",
+                          onClick: (){
+                            _playTapSound();
+                          },
                         ),
                       ),
-                      const SizedBox(width: 16,),
+                      const SizedBox(
+                        width: 16,
+                      ),
                       Expanded(
-                        child: const BoxWidget(
-                          icon: Icons.wifi_rounded,
+                        child: BoxWidget(
+                          iconLocation: "assets/settings.png",
                           title: "Settings",
-                          body:
-                          "Manage your settings",
-                          onClick: null,
+                          body: "Manage your settings",
+                          onClick: (){
+                            _playTapSound();
+                          },
                         ),
                       ),
                     ],
@@ -117,10 +141,10 @@ class HomePage extends StatelessWidget {
                   Expanded(child: Container()),
                   //Bottom Bar
                   const BarWidget(
-                    icon: Icons.wifi_rounded,
-                    title: "Who's on my WIFI?",
+                    iconLocation: "assets/padlock.png",
+                    title: "Password Generator",
                     body:
-                        "Let you know about the devices connected to your wifi network",
+                        "Easily create and generate random password for high security",
                     onClick: null,
                     iconRightSide: true,
                   ),
@@ -135,7 +159,7 @@ class HomePage extends StatelessWidget {
 }
 
 class BarWidget extends StatelessWidget {
-  final IconData icon;
+  final String iconLocation;
   final String title;
   final String body;
   final Function()? onClick;
@@ -143,7 +167,7 @@ class BarWidget extends StatelessWidget {
 
   const BarWidget({
     super.key,
-    required this.icon,
+    required this.iconLocation,
     required this.title,
     required this.body,
     required this.onClick,
@@ -163,10 +187,13 @@ class BarWidget extends StatelessWidget {
                   ? Container()
                   : Expanded(
                       flex: 1,
-                      child: Icon(
-                        icon,
-                        size: 100,
-                        color: whiteColor.withOpacity(0.8),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ImageIcon(
+                          AssetImage(iconLocation),
+                          size: 80,
+                          color: whiteColor.withOpacity(0.8),
+                        ),
                       ),
                     ),
               Expanded(
@@ -217,10 +244,13 @@ class BarWidget extends StatelessWidget {
               iconRightSide
                   ? Expanded(
                       flex: 1,
-                      child: Icon(
-                        icon,
-                        size: 100,
-                        color: whiteColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ImageIcon(
+                          AssetImage(iconLocation),
+                          size: 80,
+                          color: whiteColor.withOpacity(0.8),
+                        ),
                       ),
                     )
                   : Container(),
@@ -233,14 +263,14 @@ class BarWidget extends StatelessWidget {
 }
 
 class BoxWidget extends StatelessWidget {
-  final IconData icon;
+  final String iconLocation;
   final String title;
   final String body;
   final Function()? onClick;
 
   const BoxWidget({
     super.key,
-    required this.icon,
+    required this.iconLocation,
     required this.title,
     required this.body,
     required this.onClick,
@@ -249,8 +279,8 @@ class BoxWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.width / 2 - 24,
-      width: MediaQuery.of(context).size.width / 2 - 24,
+      height: MediaQuery.of(context).size.width / 2 - 32,
+      width: MediaQuery.of(context).size.width / 2 - 32,
       child: GestureDetector(
         onTap: onClick,
         child: Stack(
@@ -259,11 +289,12 @@ class BoxWidget extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(),
-                    Icon(
-                      icon,
-                      size: 100,
+                    ImageIcon(
+                      AssetImage(iconLocation),
+                      size: 80,
                       color: whiteColor.withOpacity(0.8),
                     ),
                     Text(
