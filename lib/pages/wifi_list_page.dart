@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
@@ -222,8 +223,8 @@ class WifiListPage extends StatelessWidget {
               ),
 
               GestureDetector(
-                onTap: () {
-                  wifiDetails(context, network);
+                onTap: () async {
+                  await AudioPlayer().play(AssetSource("tap.wav"));
                 },
                 child: Container(
                   padding: const EdgeInsets.all(8),
